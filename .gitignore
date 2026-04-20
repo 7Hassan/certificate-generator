@@ -29,3 +29,8 @@ out
 certificates_temp/*.pdf
 !certificates_temp/certificate.pdf
 .vercel
+
+# Requested: do not upload these paths
+rules of ai/
+test/
+tools/generate-test-certificate.js
