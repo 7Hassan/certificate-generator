@@ -7,3 +7,4 @@ yarn-error.log*
 # Generated certificates (keep template if present)
 certificates_temp/*.pdf
 !certificates_temp/certificate.pdf
+.vercel
