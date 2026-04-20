@@ -1,0 +1,9 @@
+node_modules/
+.env
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+
+# Generated certificates (keep template if present)
+certificates_temp/*.pdf
+!certificates_temp/certificate.pdf
