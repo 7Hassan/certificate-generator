@@ -303,6 +303,7 @@ async function processCertificates(payload) {
   const results = [];
 
   for (const studentRow of payload.data) {
+    let localCertificatePath = null;
     const student = {
       student_name: studentRow.student_name.trim(),
       course_name: studentRow.course_name.trim(),
@@ -314,7 +315,7 @@ async function processCertificates(payload) {
     try {
       const safeStudentName = student.student_name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
       const driveFileName = `${safeStudentName || 'student'}_${student.student_id}.pdf`;
-      const localCertificatePath = path.join(config.certificatesDir, driveFileName);
+      localCertificatePath = path.join(config.certificatesDir, driveFileName);
       const generatedPdf = await generateCertificatePdf(templateBytes, student, fontBytes);
       await fs.promises.writeFile(localCertificatePath, generatedPdf);
 
@@ -331,6 +332,10 @@ async function processCertificates(payload) {
         status: 'failed',
         error: error.message,
       });
+    } finally {
+      if (localCertificatePath) {
+        await fs.promises.rm(localCertificatePath, { force: true });
+      }
     }
   }
 
